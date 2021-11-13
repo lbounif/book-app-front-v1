@@ -1,62 +1,75 @@
 
 import { Button, Modal, Input, Rate } from "antd"
+import { useDispatch, useSelector} from "react-redux"
+import allActions from "../../redux/actions"
 
 const AddBook = () => {
-    //state: visible
-    //state newbook
-    //state: books list
+    const dispatch = useDispatch()
+    //get visible from bookReducer state
+
+    //state.book = {
+//     visible: false,
+//     books: [],
+//     newBook: {
+//         title: "",
+//         author: "",
+//         description: "",
+//         rating: 0
+//     }
+// }
+    const { visible, newBook } = useSelector(state => state.book)
     return (
         <div>
             <Button
                 size="large"
-                // onClick={()=> } //make visible true
+                onClick={()=> dispatch(allActions.bookActions.updateVisible(true))} 
                 >
                 Add new Book
             </Button>
             <Modal
                 title="Add New Book"
-                visible={false}
+                visible={visible}
                 onCancel={()=> {
-                    //action : make visible false
+                    dispatch(allActions.bookActions.updateVisible(false))
                 }}
                 onOk={()=> {
-                   //add new book to books list
-                   //make visible false
+                   dispatch(allActions.bookActions.addNewBook(newBook))
+                   dispatch(allActions.bookActions.updateVisible(false))
                 }}
                 >
                 <Input 
                     style={{ margin: 10}} 
                     placeholder= "Book Title"
                     size="large"
-                    // onChange ={(event)=>
-                    // update state of new book
-                    // }
-                    //value={}
+                    onChange ={(ev)=>
+                        dispatch(allActions.bookActions.updateNewBook({...newBook, title: ev.target.value}))
+                    }
+                    value={newBook.title}
                 />
                 <Input 
                     style={{ margin: 10}} 
                     placeholder= "Book Author"
                     size="large"
-                    // onChange ={(event)=>
-                    // update state of new book
-                    // }
-                    //value={}
+                    onChange ={(ev)=>
+                        dispatch(allActions.bookActions.updateNewBook({...newBook, author: ev.target.value}))
+                    }
+                    value={newBook.author}
                 />
                 <Input 
                     style={{ margin: 10}} 
                     placeholder= "Book Description"
                     size="large"
-                    // onChange ={(event)=>
-                    // update state of new book
-                    // }
-                    //value={}
+                    onChange ={(ev)=>
+                        dispatch(allActions.bookActions.updateNewBook({...newBook, description: ev.target.value}))
+                    }
+                    value={newBook.description}
                 />
                 <Rate 
                     style={{ margin: 10}} 
-                    // onChange ={(event)=>
-                    // update state of new book
-                    // }
-                    //value={}
+                    onChange ={(value)=>
+                        dispatch(allActions.bookActions.updateNewBook({...newBook, rating: value}))
+                    }
+                    value={newBook.rating}
                 />
             </Modal>
         </div>
