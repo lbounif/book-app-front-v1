@@ -13,7 +13,14 @@ const bookCard = ({title, author, img, rating, voters, description}) => {
             </div>
             <div className="book-content">
                 <div className="book-title">{title}</div>
-                <div className="book-author"></div>
+                <div className="book-author">{`By ${author}`}</div>
+                <div className="rating-container">
+                    <div className="book-rating">
+                        <Rate style={{ fontSize: 12}} disabled value={rating}/>
+                    </div>
+                    <div className="book-voters">{`${voters} Voters`}</div>
+                </div>
+                <div className="book-description">{description}</div>
             </div>
         </div>
     )
